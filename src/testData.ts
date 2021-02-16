@@ -2,8 +2,7 @@ export const items = [
   {
     name: "Pikachu",
     types: ["eletricidade", "normal", "teste"],
-    imageUrl:
-      "https://i.pinimg.com/originals/f5/1d/08/f51d08be05919290355ac004cdd5c2d6.png",
+    imageUrl: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
   },
   {
     name: "Charmander",

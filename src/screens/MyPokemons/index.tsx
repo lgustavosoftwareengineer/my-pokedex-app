@@ -28,6 +28,12 @@ function MyPokemons() {
     });
   }, [user]);
 
+  function navigateToDetailsPage(id: number) {
+    navigate("pokemon-details", {
+      id,
+    });
+  }
+
   return (
     <Container>
       <Title>Minha Pokédex</Title>
@@ -40,6 +46,7 @@ function MyPokemons() {
               name={item.name}
               types={item.types}
               imageUrl={item.imageUrl}
+              onPress={() => navigateToDetailsPage(index)}
             />
           ))}
         </ScrollView>

@@ -29,6 +29,12 @@ function SearchPokemon() {
     });
   }, [user]);
 
+  function navigateToDetailsPage(id: number) {
+    navigate("pokemon-details", {
+      id,
+    });
+  }
+
   return (
     <Container>
       <Input placeholder="Pesquise por um pokemon..."></Input>
@@ -40,6 +46,7 @@ function SearchPokemon() {
               name={item.name}
               types={item.types}
               imageUrl={item.imageUrl}
+              onPress={() => navigateToDetailsPage(index)}
             />
           ))}
         </ScrollView>

@@ -17,7 +17,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import SignUp from "./src/screens/SignUp";
 import Tabs from "./src/screens/Tabs";
-import Details from "./src/screens/Details";
+import PokemonDetails from "./src/screens/PokemonDetails";
 
 const Stack = createStackNavigator();
 
@@ -49,7 +49,7 @@ export default function App() {
         />
         <Stack.Screen
           name="pokemon-details"
-          component={Details}
+          component={PokemonDetails}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

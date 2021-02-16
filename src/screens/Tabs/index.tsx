@@ -6,7 +6,7 @@ import { theme } from "../../theme";
 
 import SearchPokemon from "../SearchPokemon";
 import MyPokemons from "../MyPokemons";
-import MyFavorites from "../MyFavorites";
+import MyFavoritesPokemons from "../MyFavoritesPokemons";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +38,7 @@ function Tabs() {
     >
       <Tab.Screen
         name="home"
-        component={MyFavorites}
+        component={MyFavoritesPokemons}
         options={{
           tabBarLabel: "Favoritos",
           tabBarIcon: ({ size, focused }) => {

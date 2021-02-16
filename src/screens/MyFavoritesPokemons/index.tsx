@@ -17,7 +17,7 @@ interface User {
   sex?: number;
 }
 
-function MyFavorites() {
+function MyFavoritesPokemons() {
   const [user, setUser] = useState<User>({});
   const [error, setError] = useState("");
 
@@ -63,4 +63,4 @@ function MyFavorites() {
   );
 }
 
-export default MyFavorites;
+export default MyFavoritesPokemons;

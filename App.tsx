@@ -17,6 +17,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SignUp from "./src/screens/SignUp";
 import HomeScreen from "./src/screens/HomeScreen";
 import { useFonts } from "expo-font";
+import { Tabs } from "native-base";
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -44,6 +45,12 @@ export default function App() {
         <Stack.Screen
           name="home-screen"
           component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="tabs"
+          component={Tabs}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

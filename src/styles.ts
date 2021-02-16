@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { theme } from "../../theme";
+import { theme } from "./theme";
 
 export const Container = styled.View`
   width: 100%;
@@ -16,7 +16,7 @@ export const Title = styled.Text`
   text-align: center;
   font-family: ${theme.fonts.title};
   font-weight: 500;
-  font-size: 30px;
+  font-size: 28px;
   line-height: 36px;
   letter-spacing: 0.09px;
   margin-bottom: 10%;
@@ -39,7 +39,7 @@ export const SubTitle = styled.Text`
 
 export const Input = styled.TextInput`
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
   text-align: center;
   line-height: 24px;
 

@@ -6,6 +6,7 @@ export const theme = {
     midGray: "#5b5b5b",
     strongGray: "#4c4c4d",
     white: "#fff",
+    strongWhite: "#e0e0e0",
   },
   fonts: {
     normal: "Nunito_600SemiBold",

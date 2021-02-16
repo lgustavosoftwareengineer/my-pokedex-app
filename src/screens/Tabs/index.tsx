@@ -1,57 +1,90 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { View, Text } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons as Icon } from "@expo/vector-icons/";
 
-// import { Container } from './styles';
+import { theme } from "../../theme";
 
-const HomeScreen: React.FC = () => {
-  return (
-    <View style={{ alignItems: "center", justifyContent: "center" }}>
-      <Text>HomeScreen</Text>
-    </View>
-  );
-};
+import SearchPokemon from "../SearchPokemon";
+import MyPokemons from "../MyPokemons";
+import MyFavorites from "../MyFavorites";
 
-const DetailsScreen: React.FC = () => {
-  return (
-    <View style={{ alignItems: "center", justifyContent: "center" }}>
-      <Text>DetailsScreen</Text>
-    </View>
-  );
-};
-
-const ContactScreen: React.FC = () => {
-  return (
-    <View style={{ alignItems: "center", justifyContent: "center" }}>
-      <Text>ContactScreen</Text>
-    </View>
-  );
-};
+const Tab = createBottomTabNavigator();
 
 function Tabs() {
-  const Tab = createBottomTabNavigator();
-
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName = "home";
-
-          if (route.name === "Home") {
-          } else if (route.name === "Details") {
-            iconName = "list";
-          } else if (route.name === "Contact") {
-            iconName = "call";
-          }
-
-          return <Ionicons name="home" size={size} color={color} />;
+      tabBarOptions={{
+        style: {
+          height: 60,
+          borderTopWidth: 0,
+          backgroundColor: theme.colors.red,
         },
-      })}
+        tabStyle: {
+          alignItems: "center",
+          justifyContent: "center",
+        },
+        iconStyle: {
+          flex: 0,
+          width: 20,
+          height: 20,
+        },
+        labelStyle: {
+          marginTop: 6,
+          fontSize: 13,
+        },
+        activeTintColor: theme.colors.black,
+        inactiveTintColor: theme.colors.strongWhite,
+      }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Details" component={DetailsScreen} />
-      <Tab.Screen name="Contact" component={ContactScreen} />
+      <Tab.Screen
+        name="home"
+        component={MyFavorites}
+        options={{
+          tabBarLabel: "Favoritos",
+          tabBarIcon: ({ size, focused }) => {
+            return (
+              <Icon
+                name="favorite"
+                size={size}
+                color={focused ? theme.colors.black : theme.colors.strongWhite}
+              />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="search"
+        component={SearchPokemon}
+        options={{
+          tabBarLabel: "Pesquisar",
+          tabBarIcon: ({ size, focused }) => {
+            return (
+              <Icon
+                name="search"
+                size={size}
+                color={focused ? theme.colors.black : theme.colors.strongWhite}
+              />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="my-pokemons"
+        component={MyPokemons}
+        options={{
+          tabBarLabel: "Meus pokemons",
+
+          tabBarIcon: ({ size, focused }) => {
+            return (
+              <Icon
+                name="collections-bookmark"
+                size={size}
+                color={focused ? theme.colors.black : theme.colors.strongWhite}
+              />
+            );
+          },
+        }}
+      />
     </Tab.Navigator>
   );
 }

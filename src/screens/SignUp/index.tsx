@@ -39,14 +39,14 @@ function SignUp() {
     } else {
       storeUser({ age, name, sex });
       getUser().then((value) => console.log(value));
-      navigate("home-screen");
+      navigate("tabs", { screen: "home" });
     }
   }
 
   useEffect(() => {
     getUser().then((value) => {
       if (value) {
-        navigate("home-screen");
+        navigate("tabs", { screen: "home" });
       } else {
         return null;
       }
@@ -56,13 +56,13 @@ function SignUp() {
   return (
     <Container>
       <Title>
-        Seja bem vindo(a) ao{" "}
-        <Title style={{ color: theme.colors.white }}>PokeApp</Title>
+        Seja bem vindo(a) ao app{" "}
+        <Title style={{ color: theme.colors.white }}>Minha Pokédex</Title>
       </Title>
 
       <Logo source={logo} />
 
-      <SubTitle>Preencha os dados para ter acesso à sua PokeDex</SubTitle>
+      <SubTitle>Preencha os dados para ter acesso à sua Pokédex</SubTitle>
 
       <Input
         placeholder="Qual o seu nome?"
@@ -96,7 +96,7 @@ function SignUp() {
       </Row>
 
       <Button onPress={handlerConfirmSignUp}>
-        <Paragraph>Confirmar cadastro</Paragraph>
+        <Paragraph>Acessar Pokédex</Paragraph>
       </Button>
     </Container>
   );

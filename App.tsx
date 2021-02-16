@@ -15,9 +15,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import SignUp from "./src/screens/SignUp";
-import HomeScreen from "./src/screens/HomeScreen";
+import HomeScreen from "./src/screens/MyFavorites";
 import { useFonts } from "expo-font";
-import { Tabs } from "native-base";
+import Tabs from "./src/screens/Tabs";
+
+const Stack = createStackNavigator();
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -32,8 +34,6 @@ export default function App() {
     return <AppLoading />;
   }
 
-  const Stack = createStackNavigator();
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -42,12 +42,6 @@ export default function App() {
           component={SignUp}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="home-screen"
-          component={HomeScreen}
-          options={{ headerShown: false }}
-        />
-
         <Stack.Screen
           name="tabs"
           component={Tabs}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, GestureResponderEvent } from "react-native";
 import { theme } from "../../theme";
 
 import {
@@ -18,6 +18,7 @@ interface CardProps {
   imageUrl: string;
   isOnSearch?: boolean;
   isOnMyPokemons?: boolean;
+  onPress: (event: GestureResponderEvent) => void;
 }
 
 function Card({
@@ -26,9 +27,10 @@ function Card({
   imageUrl,
   isOnSearch,
   isOnMyPokemons,
+  onPress,
 }: CardProps) {
   return (
-    <Container>
+    <Container onPress={onPress}>
       <CardImage
         source={{
           uri: imageUrl,

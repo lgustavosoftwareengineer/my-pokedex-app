@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 
 import AppLoading from "expo-app-loading";
 import { Ionicons } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 
 import {
   Nunito_600SemiBold,
@@ -15,9 +16,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import SignUp from "./src/screens/SignUp";
-import HomeScreen from "./src/screens/MyFavorites";
-import { useFonts } from "expo-font";
 import Tabs from "./src/screens/Tabs";
+import Details from "./src/screens/Details";
 
 const Stack = createStackNavigator();
 
@@ -45,6 +45,11 @@ export default function App() {
         <Stack.Screen
           name="tabs"
           component={Tabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="pokemon-details"
+          component={Details}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

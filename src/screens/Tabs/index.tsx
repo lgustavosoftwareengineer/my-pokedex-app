@@ -32,8 +32,8 @@ function Tabs() {
           marginTop: 6,
           fontSize: 13,
         },
-        activeTintColor: theme.colors.black,
-        inactiveTintColor: theme.colors.strongWhite,
+        activeTintColor: theme.colors.strongWhite,
+        inactiveTintColor: theme.colors.black,
       }}
     >
       <Tab.Screen
@@ -46,7 +46,7 @@ function Tabs() {
               <Icon
                 name="favorite"
                 size={size}
-                color={focused ? theme.colors.black : theme.colors.strongWhite}
+                color={focused ? theme.colors.strongWhite : theme.colors.black}
               />
             );
           },
@@ -62,7 +62,7 @@ function Tabs() {
               <Icon
                 name="search"
                 size={size}
-                color={focused ? theme.colors.black : theme.colors.strongWhite}
+                color={focused ? theme.colors.strongWhite : theme.colors.black}
               />
             );
           },
@@ -79,7 +79,7 @@ function Tabs() {
               <Icon
                 name="collections-bookmark"
                 size={size}
-                color={focused ? theme.colors.black : theme.colors.strongWhite}
+                color={focused ? theme.colors.strongWhite : theme.colors.black}
               />
             );
           },

@@ -116,3 +116,8 @@ export const Row = styled.View`
   width: 100%;
   justify-content: space-around;
 `;
+
+export const ScrollView = styled.ScrollView`
+  padding: 5px;
+  width: 100%;
+`;

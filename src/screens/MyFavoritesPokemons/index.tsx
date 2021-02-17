@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import { getUser, storeUser } from "../../repositories/user.repository";
 
-import { Container, Title, Input, Button, Paragraph } from "../../styles";
+import {
+  Container,
+  Title,
+  Input,
+  Button,
+  Paragraph,
+  ScrollView,
+} from "../../styles";
 import Card from "../../components/Card";
 
 import { theme } from "../../theme";

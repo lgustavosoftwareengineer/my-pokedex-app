@@ -6,10 +6,10 @@ export const Container = styled.TouchableOpacity`
   justify-content: space-around;
   margin-bottom: 20px;
   width: 100%;
-  padding: 12%;
+  padding: 5%;
   border-radius: 25px;
 
-  background-color: ${theme.colors.black};
+  background-color: ${theme.colors.strongGray};
   color: ${theme.colors.white};
 `;
 

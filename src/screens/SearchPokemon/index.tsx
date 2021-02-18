@@ -28,7 +28,10 @@ interface Pokemon {
 }
 
 interface PokemonAbility {
-  name: string;
+  ability: {
+    name: string;
+    url: string;
+  };
 }
 
 interface PokemonType {
@@ -68,29 +71,39 @@ function SearchPokemon() {
 
       //console.log(items);
     });
-  }, [user, items]);
+  }, [user]);
 
   function getAllPokemons() {
-    api
-      .get(
-        "pokemon?limit=5&offset=200                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
-      )
-      .then((response) => {
-        response.data.results.map((result: Result, index: number) => {
-          api.get(result.url).then((item: any) => {
-            setItems([
-              ...items,
-              {
-                id: item.data.id,
-                name: item.data.name,
-                imageUrl: item.data.sprites.back_default,
-              },
-            ]);
+    var array = new Array();
+    api.get("pokemon?limit=20&offset=200").then((response) => {
+      response.data.results.map((result: Result, index: number) => {
+        interface Item {
+          data: {
+            id?: number;
+            name?: string;
+            moves?: PokemonAbility[];
+            weight?: number;
+            order?: number;
+            types?: PokemonType[];
+            sprites?: { back_default?: string };
+          };
+        }
+        api.get(result.url).then((item: Item) => {
+          array.push({
+            id: item.data.id,
+            order: item.data.order,
+            name: item.data.name,
+            imageUrl: item.data.sprites?.back_default,
+            types: item.data.types,
+            weight: item.data.weight,
+            abilities: item.data.moves,
           });
+          if (index + 1 === response.data.results.length) {
+            setItems(array);
+          }
         });
       });
-
-    console.log(items);
+    });
   }
 
   function navigateToDetailsPage(id?: number) {
@@ -114,19 +127,23 @@ function SearchPokemon() {
           getAllPokemons();
         }}
       >
-        <Paragraph>Buscar por pokemons</Paragraph>
+        <Paragraph>Listar todos os pokemons</Paragraph>
       </Button>
-      <View style={{ width: "100%", height: "100%" }}>
+      <View style={{ width: "100%", height: "100%", paddingBottom: 50 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {items.length >= 1 ? (
-            items.map((item: PokemonFromApi, index: number) => (
-              <Card
-                key={index}
-                name={item.name}
-                imageUrl={item.imageUrl}
-                onPress={() => navigateToDetailsPage(item.id)}
-              />
-            ))
+            items.map((item: PokemonFromApi, index: number) => {
+              //console.log(item.id);
+              return (
+                <Card
+                  key={index}
+                  name={item.name}
+                  imageUrl={item.imageUrl}
+                  types={item.types}
+                  onPress={() => navigateToDetailsPage(item.id)}
+                />
+              );
+            })
           ) : (
             <Title>Nenhum resultado para vc</Title>
           )}

@@ -21,6 +21,11 @@ interface CardProps {
   onPress: (event: GestureResponderEvent) => void;
 }
 
+interface Type {
+  slot?: number;
+  type?: { name?: string; url?: string };
+}
+
 function Card({
   name,
   types,
@@ -39,9 +44,9 @@ function Card({
       <CardBody>
         <CardTitle>{name}</CardTitle>
         <CardFooter horizontal={true} showsHorizontalScrollIndicator={false}>
-          {types?.map((type, index) => (
+          {types?.map((type: Type, index: number) => (
             <CardFooterElement key={index} color={theme.colors.red}>
-              <CardFooterLabel>{type}</CardFooterLabel>
+              <CardFooterLabel>{type.type?.name}</CardFooterLabel>
             </CardFooterElement>
           ))}
         </CardFooter>

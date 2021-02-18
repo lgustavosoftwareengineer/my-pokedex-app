@@ -43,6 +43,9 @@ interface Pokemon {
 
 function PokemonDetails() {
   const route = useRoute();
+  const params = route.params as Params;
+  const { navigate, goBack } = useNavigation();
+
   const [pokemon, setPokemon] = useState<Pokemon>({});
 
   const [isOnMyPokedex, setIsOnMyPokedex] = useState({
@@ -53,10 +56,6 @@ function PokemonDetails() {
     text: "Adicionar aos favoritos",
     state: false,
   });
-
-  const params = route.params as Params;
-
-  const { navigate, goBack } = useNavigation();
 
   const isOnMyFavoritesExpression = isOnMyFavorites.state
     ? theme.colors.red

@@ -13,9 +13,9 @@ import {
 } from "./style";
 
 interface CardProps {
-  name: string;
-  types: string[];
-  imageUrl: string;
+  name?: string;
+  types?: string[] | any;
+  imageUrl?: string;
   isOnSearch?: boolean;
   isOnMyPokemons?: boolean;
   onPress: (event: GestureResponderEvent) => void;
@@ -39,7 +39,7 @@ function Card({
       <CardBody>
         <CardTitle>{name}</CardTitle>
         <CardFooter horizontal={true} showsHorizontalScrollIndicator={false}>
-          {types.map((type, index) => (
+          {types?.map((type, index) => (
             <CardFooterElement key={index} color={theme.colors.red}>
               <CardFooterLabel>{type}</CardFooterLabel>
             </CardFooterElement>

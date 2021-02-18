@@ -120,4 +120,5 @@ export const Row = styled.View`
 export const ScrollView = styled.ScrollView`
   padding: 5px;
   width: 100%;
+  margin-bottom: 15px;
 `;

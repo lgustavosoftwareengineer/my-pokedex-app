@@ -19,7 +19,6 @@ export const Title = styled.Text`
   font-size: 28px;
   line-height: 36px;
   letter-spacing: 0.09px;
-  margin-bottom: 10%;
 
   font-style: normal;
   color: #000;
@@ -120,5 +119,6 @@ export const Row = styled.View`
 export const ScrollView = styled.ScrollView`
   padding: 5px;
   width: 100%;
+  height: 100%;
   margin-bottom: 15px;
 `;

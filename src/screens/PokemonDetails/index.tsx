@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ActivityIndicator } from "react-native";
 import { MaterialIcons as Icon } from "@expo/vector-icons/";
 
 import {
@@ -29,16 +29,49 @@ import {
 } from "./style";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import api from "../../services/api";
+import {
+  getPokemons,
+  storeMyPokemon,
+} from "../../repositories/mypokemons.respositoy";
+import {
+  getMyFavorites,
+  storeMyFavorites,
+} from "../../repositories/favorites.repository";
 
 interface Params {
   id: number;
 }
+interface PokemonAbility {
+  move: {
+    name: string;
+    url: string;
+  };
+}
 
+interface PokemonType {
+  name: string;
+}
 interface Pokemon {
   id?: number;
   name?: string;
-  types?: string[];
+  abilities?: PokemonAbility[];
+  weight?: number;
+  order?: number;
+  types?: PokemonType[];
   imageUrl?: string;
+}
+
+interface Response {
+  data: {
+    id?: number;
+    name?: string;
+    moves?: PokemonAbility[];
+    weight?: number;
+    order?: number;
+    types?: PokemonType[];
+    sprites?: { back_default?: string };
+  };
 }
 
 function PokemonDetails() {
@@ -46,7 +79,7 @@ function PokemonDetails() {
   const params = route.params as Params;
   const { navigate, goBack } = useNavigation();
 
-  const [pokemon, setPokemon] = useState<Pokemon>({});
+  const [pokemon, setPokemon] = useState<Pokemon>();
 
   const [isOnMyPokedex, setIsOnMyPokedex] = useState({
     text: "Adicionar na Pokedex",
@@ -66,12 +99,30 @@ function PokemonDetails() {
     : theme.colors.black;
 
   function handlerAddInFavorites(id: number) {
+    if (isOnMyFavorites.state === false) {
+      storeMyFavorites({
+        id: pokemon?.id,
+        imageUrl: pokemon?.imageUrl,
+        name: pokemon?.name,
+        types: pokemon?.types,
+      });
+    }
+
     setIsOnMyFavorites({
       state: !isOnMyFavorites.state,
       text: "Nos favoritos",
     });
   }
   function handlerAddInPokedex(id: number) {
+    if (isOnMyPokedex.state === false) {
+      storeMyPokemon({
+        id: pokemon?.id,
+        imageUrl: pokemon?.imageUrl,
+        name: pokemon?.name,
+        types: pokemon?.types,
+      });
+    }
+
     setIsOnMyPokedex({
       state: !isOnMyPokedex.state,
       text: "Na Pokedêx",
@@ -79,10 +130,60 @@ function PokemonDetails() {
   }
 
   useEffect(() => {
-    const pokemon = items.find((item) => item.id == params.id);
-    return setPokemon(pokemon ? pokemon : {});
+    api
+      .get(`https://pokeapi.co/api/v2/pokemon/${params.id}/`)
+      .then((response: Response) => {
+        const _pokemon: Pokemon = {
+          name: response.data.name,
+          abilities: response.data.moves,
+          id: response.data.id,
+          imageUrl: response.data.sprites?.back_default,
+          order: response.data.order,
+          types: response.data.types,
+          weight: response.data.weight,
+        };
+        if (!pokemon) {
+          setPokemon(_pokemon);
+        }
+      });
+
+    getPokemons().then((_pokemons) => {
+      const pokemonFinded = _pokemons.find(
+        (_pokemon: Pokemon) => pokemon?.id === _pokemon?.id
+      );
+      if (pokemonFinded) {
+        setIsOnMyPokedex({
+          state: !isOnMyPokedex.state,
+          text: "Na Pokedêx",
+        });
+      }
+    });
+
+    getMyFavorites().then((_pokemons) => {
+      const pokemonFinded = _pokemons.find(
+        (_pokemon: Pokemon) => pokemon?.id === _pokemon?.id
+      );
+      if (pokemonFinded) {
+        setIsOnMyFavorites({
+          state: !isOnMyFavorites.state,
+          text: "Nos favoritos",
+        });
+      }
+    });
   }, [pokemon]);
 
+  if (!pokemon) {
+    return (
+      <Container>
+        <View
+          style={{ width: "100%", height: "100%", justifyContent: "center" }}
+        >
+          <Paragraph>Carregando pokemon...</Paragraph>
+          <ActivityIndicator size="large" color={theme.colors.white} />
+        </View>
+      </Container>
+    );
+  }
   return (
     <SafeAreaView>
       <ScrollView>
@@ -91,12 +192,12 @@ function PokemonDetails() {
             <TouchableOpacity onPress={() => goBack()}>
               <Icon name="arrow-back" size={20} color={theme.colors.black} />
             </TouchableOpacity>
-            <PokemonName>{pokemon.name}</PokemonName>
+            <PokemonName>{pokemon?.name}</PokemonName>
             <View></View>
           </Header>
           <Image
             source={{
-              uri: pokemon.imageUrl,
+              uri: pokemon?.imageUrl,
             }}
             style={{ width: 200, height: 200, margin: 20 }}
           />
@@ -128,7 +229,7 @@ function PokemonDetails() {
           <Card>
             <CardTitle>Peso: 84kg</CardTitle>
             <CardTitle>Status</CardTitle>
-            <CardSubtitle>Nome: {pokemon.name}</CardSubtitle>
+            <CardSubtitle>Nome: {pokemon?.name}</CardSubtitle>
             <CardSubtitle>Valor: 100</CardSubtitle>
           </Card>
 
@@ -137,10 +238,9 @@ function PokemonDetails() {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           >
-            {pokemon.types?.map((type, index) => (
+            {pokemon?.abilities?.splice(0, 4).map((ability, index) => (
               <Skill key={index}>
-                <SkillLabel>{type}</SkillLabel>
-                <SkillLabel>{type}</SkillLabel>
+                <SkillLabel>{ability.move.name}</SkillLabel>
               </Skill>
             ))}
           </SkillsContainer>

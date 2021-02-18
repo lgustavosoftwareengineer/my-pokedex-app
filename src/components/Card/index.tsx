@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, GestureResponderEvent } from "react-native";
+import { getColor } from "../../services/getColor";
 import { theme } from "../../theme";
 
 import {
@@ -45,7 +46,7 @@ function Card({
         <CardTitle>{name}</CardTitle>
         <CardFooter horizontal={true} showsHorizontalScrollIndicator={false}>
           {types?.map((type: Type, index: number) => (
-            <CardFooterElement key={index} color={theme.colors.red}>
+            <CardFooterElement key={index} color={getColor(type.type?.name)}>
               <CardFooterLabel>{type.type?.name}</CardFooterLabel>
             </CardFooterElement>
           ))}

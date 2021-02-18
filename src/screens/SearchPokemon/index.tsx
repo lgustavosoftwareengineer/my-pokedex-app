@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import Card from "../../components/Card";
 import { getUser } from "../../repositories/user.repository";
@@ -59,6 +59,8 @@ function SearchPokemon() {
   const [searchValue, setSearchValue] = useState("");
   const [items, setItems] = useState<any>([]);
 
+  const [searchOffset, setSearchOffset] = useState(200);
+
   const { navigate } = useNavigation();
 
   useEffect(() => {
@@ -75,7 +77,7 @@ function SearchPokemon() {
 
   function getAllPokemons() {
     var array = new Array();
-    api.get("pokemon?limit=20&offset=200").then((response) => {
+    api.get(`pokemon?limit=20&offset=${searchOffset}`).then((response) => {
       response.data.results.map((result: Result, index: number) => {
         interface Item {
           data: {
@@ -88,20 +90,23 @@ function SearchPokemon() {
             sprites?: { back_default?: string };
           };
         }
-        api.get(result.url).then((item: Item) => {
-          array.push({
-            id: item.data.id,
-            order: item.data.order,
-            name: item.data.name,
-            imageUrl: item.data.sprites?.back_default,
-            types: item.data.types,
-            weight: item.data.weight,
-            abilities: item.data.moves,
-          });
-          if (index + 1 === response.data.results.length) {
-            setItems(array);
-          }
-        });
+        api
+          .get(result.url)
+          .then((item: Item) => {
+            array.push({
+              id: item.data.id,
+              order: item.data.order,
+              name: item.data.name,
+              imageUrl: item.data.sprites?.back_default,
+              types: item.data.types,
+              weight: item.data.weight,
+              abilities: item.data.moves,
+            });
+            if (index + 1 === response.data.results.length) {
+              setItems(array);
+            }
+          })
+          .catch((err) => {});
       });
     });
   }
@@ -116,24 +121,27 @@ function SearchPokemon() {
     setSearchValue(event);
   }
 
+  const handlerSearchButton = useCallback(() => {
+    if (items.length > 1) {
+      setSearchOffset(searchOffset + 20);
+      getAllPokemons;
+    }
+    getAllPokemons();
+  }, [items]);
+
   return (
     <Container>
       <Input
         placeholder="Pesquise por um pokemon..."
         onChangeText={handlerInput}
       ></Input>
-      <Button
-        onPress={() => {
-          getAllPokemons();
-        }}
-      >
-        <Paragraph>Listar todos os pokemons</Paragraph>
+      <Button onPress={handlerSearchButton}>
+        <Paragraph>Carregar mais pokemons</Paragraph>
       </Button>
       <View style={{ width: "100%", height: "100%", paddingBottom: 50 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {items.length >= 1 ? (
             items.map((item: PokemonFromApi, index: number) => {
-              //console.log(item.id);
               return (
                 <Card
                   key={index}
@@ -149,6 +157,9 @@ function SearchPokemon() {
           )}
         </ScrollView>
       </View>
+      <Button>
+        <Paragraph>Carregar mais pokemons</Paragraph>
+      </Button>
     </Container>
   );
 }

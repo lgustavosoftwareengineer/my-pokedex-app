@@ -12,6 +12,7 @@ import {
   Button,
   Paragraph,
   ScrollView,
+  SubTitle,
 } from "../../styles";
 
 import Card from "../../components/Card";
@@ -23,23 +24,8 @@ import {
   getMyFavorites,
 } from "../../repositories/favorites.repository";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
-interface User {
-  name?: string;
-  age?: number;
-  sex?: number;
-}
-
-interface PokemonType {
-  name: string;
-}
-
-interface Pokemon {
-  id?: number;
-  name?: string;
-  imageUrl?: string;
-  types?: PokemonType[];
-}
+import { Header, Main } from "./styles";
+import { Pokemon, User } from "./interfaces";
 
 function MyFavoritesPokemons() {
   const [user, setUser] = useState<User>({});
@@ -102,16 +88,7 @@ function MyFavoritesPokemons() {
 
   return (
     <Container>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "120%",
-          marginBottom: "8%",
-          paddingHorizontal: "2.5%",
-        }}
-      >
+      <Header>
         <TouchableOpacity onPress={handlerUpdateButton}>
           <Icon name="update" size={36} color={theme.colors.black} />
         </TouchableOpacity>
@@ -119,14 +96,16 @@ function MyFavoritesPokemons() {
         <TouchableOpacity onPress={handlerDeleteButton}>
           <Icon name="clear" size={36} color={theme.colors.black} />
         </TouchableOpacity>
-      </View>
+      </Header>
+
+      <SubTitle>Seja bem vindo(a), {user.name}</SubTitle>
 
       <Input
         placeholder="Pesquise na sua lista de favoritos..."
         onChangeText={handlerInput}
       ></Input>
 
-      <View style={{ width: "100%", height: "100%", paddingBottom: "10%" }}>
+      <Main>
         <ScrollView showsVerticalScrollIndicator={false}>
           {pokemons.length <= 0 ? (
             <View>
@@ -154,7 +133,7 @@ function MyFavoritesPokemons() {
             ))
           )}
         </ScrollView>
-      </View>
+      </Main>
     </Container>
   );
 }

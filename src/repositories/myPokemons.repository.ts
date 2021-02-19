@@ -21,7 +21,6 @@ export const storeMyPokemon = async (poke: Pokemon) => {
         JSON.stringify([...pokemonsArray, poke])
       );
       return pokemonsArray;
-      //console.log(pokemonsArray);
     } else {
       await AsyncStorage.setItem("@my-pokemons", JSON.stringify([poke]));
     }
@@ -40,9 +39,7 @@ export const getPokemons = async () => {
     if (pokemons !== null) {
       const pokemonsArray = JSON.parse(pokemons);
       return pokemonsArray;
-      //console.log(pokemonsArray);
     } else {
-      console.log("ops");
     }
   } catch (e) {
     return e;

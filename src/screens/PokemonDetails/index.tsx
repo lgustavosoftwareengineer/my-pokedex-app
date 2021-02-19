@@ -2,6 +2,20 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, ActivityIndicator } from "react-native";
 import { MaterialIcons as Icon } from "@expo/vector-icons/";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import api from "../../services/api";
+import {
+  getPokemons,
+  storeMyPokemon,
+} from "../../repositories/myPokemons.repository";
+import {
+  getMyFavorites,
+  storeMyFavorites,
+} from "../../repositories/favorites.repository";
+
+import { theme } from "../../theme";
 
 import {
   Container,
@@ -10,8 +24,6 @@ import {
   Button as BackButton,
 } from "../../styles";
 
-import { items } from "../../testData";
-import { theme } from "../../theme";
 import {
   Actions,
   Button,
@@ -26,53 +38,10 @@ import {
   Header,
   CardTitle,
   CardSubtitle,
+  Center,
 } from "./style";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
-import api from "../../services/api";
-import {
-  getPokemons,
-  storeMyPokemon,
-} from "../../repositories/mypokemons.respositoy";
-import {
-  getMyFavorites,
-  storeMyFavorites,
-} from "../../repositories/favorites.repository";
 
-interface Params {
-  id: number;
-}
-interface PokemonAbility {
-  move: {
-    name: string;
-    url: string;
-  };
-}
-
-interface PokemonType {
-  name: string;
-}
-interface Pokemon {
-  id?: number;
-  name?: string;
-  abilities?: PokemonAbility[];
-  weight?: number;
-  order?: number;
-  types?: PokemonType[];
-  imageUrl?: string;
-}
-
-interface Response {
-  data: {
-    id?: number;
-    name?: string;
-    moves?: PokemonAbility[];
-    weight?: number;
-    order?: number;
-    types?: PokemonType[];
-    sprites?: { back_default?: string };
-  };
-}
+import { Params, Pokemon, Response } from "./interfaces";
 
 function PokemonDetails() {
   const route = useRoute();
@@ -147,45 +116,47 @@ function PokemonDetails() {
         }
       });
 
-    getPokemons().then((_pokemons) => {
-      const pokemonFinded = _pokemons.find(
-        (_pokemon: Pokemon) => pokemon?.id === _pokemon?.id
-      );
-      if (pokemonFinded) {
-        setIsOnMyPokedex({
-          state: !isOnMyPokedex.state,
-          text: "Na Pokedêx",
-        });
-      }
-    });
+    getPokemons()
+      .then((_pokemons) => {
+        const pokemonFinded = _pokemons.find(
+          (_pokemon: Pokemon) => pokemon?.id === _pokemon?.id
+        );
+        if (pokemonFinded) {
+          setIsOnMyPokedex({
+            state: !isOnMyPokedex.state,
+            text: "Na Pokedêx",
+          });
+        }
+      })
+      .catch((e) => {});
 
-    getMyFavorites().then((_pokemons) => {
-      const pokemonFinded = _pokemons.find(
-        (_pokemon: Pokemon) => pokemon?.id === _pokemon?.id
-      );
-      if (pokemonFinded) {
-        setIsOnMyFavorites({
-          state: !isOnMyFavorites.state,
-          text: "Nos favoritos",
-        });
-      }
-    });
+    getMyFavorites()
+      .then((_pokemons) => {
+        const pokemonFinded = _pokemons.find(
+          (_pokemon: Pokemon) => pokemon?.id === _pokemon?.id
+        );
+        if (pokemonFinded) {
+          setIsOnMyFavorites({
+            state: !isOnMyFavorites.state,
+            text: "Nos favoritos",
+          });
+        }
+      })
+      .catch((e) => {});
   }, [pokemon]);
 
   if (!pokemon) {
     return (
       <Container>
-        <View
-          style={{ width: "100%", height: "100%", justifyContent: "center" }}
-        >
+        <Center>
           <Paragraph>Carregando pokemon...</Paragraph>
           <ActivityIndicator size="large" color={theme.colors.white} />
-        </View>
+        </Center>
       </Container>
     );
   }
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: theme.colors.red }}>
       <ScrollView>
         <Container>
           <Header>
@@ -238,7 +209,7 @@ function PokemonDetails() {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           >
-            {pokemon?.abilities?.splice(0, 4).map((ability, index) => (
+            {pokemon?.abilities?.map((ability, index) => (
               <Skill key={index}>
                 <SkillLabel>{ability.move.name}</SkillLabel>
               </Skill>

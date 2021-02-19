@@ -1,16 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
-import Card from "../../components/Card";
-
 import { MaterialIcons as Icon } from "@expo/vector-icons/";
+
+import Card from "../../components/Card";
 
 import {
   clearAllPokemons,
   getPokemons,
-} from "../../repositories/mypokemons.respositoy";
+} from "../../repositories/myPokemons.repository";
 import { getUser } from "../../repositories/user.repository";
 
+import { theme } from "../../theme";
 import {
   Container,
   Input,
@@ -18,25 +19,11 @@ import {
   ScrollView,
   Button,
   Paragraph,
+  SubTitle,
 } from "../../styles";
-import { theme } from "../../theme";
+import { Header } from "./style";
 
-interface User {
-  name?: string;
-  age?: number;
-  sex?: number;
-}
-
-interface PokemonType {
-  name: string;
-}
-
-interface Pokemon {
-  id?: number;
-  name?: string;
-  imageUrl?: string;
-  types?: PokemonType[];
-}
+import { Pokemon, User } from "./interfaces";
 
 function MyPokemons() {
   const [user, setUser] = useState<User>({});
@@ -102,25 +89,18 @@ function MyPokemons() {
 
   return (
     <Container>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "8%",
-          width: "100%",
-        }}
-      >
+      <Header>
         <TouchableOpacity onPress={handlerUpdateButton}>
           <Icon name="update" size={36} color={theme.colors.black} />
         </TouchableOpacity>
 
-        <Title>Minha Pokédex</Title>
+        <Title>Pokédex de {user.name}</Title>
 
         <TouchableOpacity onPress={handlerDeleteButton}>
           <Icon name="clear" size={36} color={theme.colors.black} />
         </TouchableOpacity>
-      </View>
+      </Header>
+
       <Input
         placeholder="Pesquise na sua Pokédex..."
         onChangeText={handlerInput}

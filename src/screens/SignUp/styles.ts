@@ -9,7 +9,10 @@ export const Container = styled.View`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20% 10%;
+  padding-top: 10%;
+  padding-bottom: 20%;
+  padding-left: 10%;
+  padding-right: 10%;
 `;
 
 export const Title = styled.Text`

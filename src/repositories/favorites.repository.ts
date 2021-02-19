@@ -21,7 +21,6 @@ export const storeMyFavorites = async (poke: Pokemon) => {
         JSON.stringify([...pokemonsArray, poke])
       );
       return pokemonsArray;
-      //console.log(pokemonsArray);
     } else {
       await AsyncStorage.setItem(
         "@my-pokemons-favorites",
@@ -43,9 +42,7 @@ export const getMyFavorites = async () => {
     if (pokemons !== null) {
       const pokemonsArray = JSON.parse(pokemons);
       return pokemonsArray;
-      //console.log(pokemonsArray);
     } else {
-      console.log("ops");
     }
   } catch (e) {
     return e;

@@ -13,44 +13,13 @@ import {
   Button,
   Paragraph,
 } from "../../styles";
-
-interface User {
-  name?: string;
-  age?: number;
-  sex?: number;
-}
-
-interface Pokemon {
-  id: number;
-  name: string;
-  types: string[];
-  imageUrl: string;
-}
-
-interface PokemonAbility {
-  ability: {
-    name: string;
-    url: string;
-  };
-}
-
-interface PokemonType {
-  name: string;
-}
-interface PokemonFromApi {
-  id?: number;
-  name?: string;
-  abilities?: PokemonAbility[];
-  weight?: number;
-  order?: number;
-  types?: PokemonType[];
-  imageUrl?: string;
-}
-
-interface Result {
-  name: string;
-  url: string;
-}
+import {
+  Pokemon,
+  PokemonAbility,
+  PokemonType,
+  Result,
+  User,
+} from "./interfaces";
 
 function SearchPokemon() {
   const [user, setUser] = useState<User>({});
@@ -71,8 +40,6 @@ function SearchPokemon() {
       } else {
         setError("Usuário não encontrado");
       }
-
-      //console.log(items);
     });
   }, [user]);
 

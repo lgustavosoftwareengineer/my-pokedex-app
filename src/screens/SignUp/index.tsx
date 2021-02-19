@@ -22,6 +22,8 @@ import logo from "../../assets/pokemon-logo.png";
 import manSymbol from "../../assets/man-symbol.png";
 import womanSymbol from "../../assets/woman-symbol.png";
 import { theme } from "../../theme";
+import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function SignUp() {
   const [name, setName] = useState<string>("");
@@ -54,51 +56,56 @@ function SignUp() {
   }, []);
 
   return (
-    <Container>
-      <Title>
-        Seja bem vindo(a) ao app{" "}
-        <Title style={{ color: theme.colors.white }}>Minha Pokédex</Title>
-      </Title>
+    <ScrollView>
+      <SafeAreaView style={{ backgroundColor: theme.colors.red }} />
+      <Container>
+        <Title>
+          Seja bem vindo(a) ao app{" "}
+          <Title style={{ color: theme.colors.white }}>Minha Pokédex</Title>
+        </Title>
 
-      <Logo source={logo} />
+        <Logo source={logo} />
 
-      <SubTitle>Preencha os dados para ter acesso à sua Pokédex</SubTitle>
+        <SubTitle>Preencha os dados para ter acesso à sua Pokédex</SubTitle>
 
-      <Input
-        placeholder="Qual o seu nome?"
-        onChangeText={(text) => setName(text)}
-      ></Input>
-      <Input
-        placeholder="Qual a sua idade?"
-        keyboardType="numeric"
-        onChangeText={(text) => setAge(Number(text))}
-      ></Input>
+        <Input
+          placeholder="Qual o seu nome?"
+          onChangeText={(text) => setName(text)}
+        ></Input>
+        <Input
+          placeholder="Qual a sua idade?"
+          keyboardType="numeric"
+          onChangeText={(text) => setAge(Number(text))}
+        ></Input>
 
-      <Label>Qual seu sexo?</Label>
+        <Label>Qual seu sexo?</Label>
 
-      <Row>
-        <SexButton
-          onPress={() => setSex(1)}
-          style={{
-            backgroundColor: sex == 0 ? theme.colors.white : theme.colors.black,
-          }}
-        >
-          <Image source={manSymbol} />
-        </SexButton>
-        <SexButton
-          onPress={() => setSex(0)}
-          style={{
-            backgroundColor: sex == 0 ? theme.colors.black : theme.colors.white,
-          }}
-        >
-          <Image source={womanSymbol} width={10} />
-        </SexButton>
-      </Row>
+        <Row>
+          <SexButton
+            onPress={() => setSex(1)}
+            style={{
+              backgroundColor:
+                sex == 0 ? theme.colors.white : theme.colors.black,
+            }}
+          >
+            <Image source={manSymbol} />
+          </SexButton>
+          <SexButton
+            onPress={() => setSex(0)}
+            style={{
+              backgroundColor:
+                sex == 0 ? theme.colors.black : theme.colors.white,
+            }}
+          >
+            <Image source={womanSymbol} width={10} />
+          </SexButton>
+        </Row>
 
-      <Button onPress={handlerConfirmSignUp}>
-        <Paragraph>Acessar Pokédex</Paragraph>
-      </Button>
-    </Container>
+        <Button onPress={handlerConfirmSignUp}>
+          <Paragraph>Acessar Pokédex</Paragraph>
+        </Button>
+      </Container>
+    </ScrollView>
   );
 }
 

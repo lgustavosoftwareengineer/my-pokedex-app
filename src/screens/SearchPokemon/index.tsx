@@ -8,14 +8,7 @@ import Card from "../../components/Card";
 import { getUser } from "../../repositories/user.repository";
 import api from "../../services/api";
 
-import {
-  Container,
-  Input,
-  Title,
-  ScrollView,
-  Button,
-  Paragraph,
-} from "../../styles";
+import { Container, Input, Title, ScrollView, Paragraph } from "../../styles";
 import {
   Pokemon,
   PokemonAbility,
@@ -24,6 +17,7 @@ import {
   User,
 } from "./interfaces";
 import { theme } from "../../theme";
+import { Actions, Button, Divisor } from "./styles";
 
 function SearchPokemon() {
   const [user, setUser] = useState<User>({});
@@ -127,20 +121,15 @@ function SearchPokemon() {
       ></Input>
       <View></View>
 
-      <View
-        style={{
-          width: "100%",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <TouchableOpacity onPress={handlerBackButton}>
-          <Icon name="arrow-back" size={30} color={theme.colors.black} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handlerSearchButton}>
-          <Icon name="arrow-forward" size={30} color={theme.colors.black} />
-        </TouchableOpacity>
-      </View>
+      <Actions>
+        <Button onPress={handlerBackButton}>
+          <Icon name="arrow-back" size={26} color={theme.colors.gray} />
+        </Button>
+        <Divisor />
+        <Button onPress={handlerSearchButton}>
+          <Icon name="arrow-forward" size={26} color={theme.colors.gray} />
+        </Button>
+      </Actions>
       <View style={{ width: "100%", height: "100%", paddingBottom: 50 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {pokemons.length <= 0 ? (

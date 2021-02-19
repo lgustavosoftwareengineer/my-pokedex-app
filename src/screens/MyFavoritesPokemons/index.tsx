@@ -13,6 +13,7 @@ import {
   Paragraph,
   ScrollView,
 } from "../../styles";
+
 import Card from "../../components/Card";
 
 import { theme } from "../../theme";

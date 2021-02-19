@@ -1,9 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
 import { View, Text } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import Card from "../../components/Card";
 import { getUser } from "../../repositories/user.repository";
 import api from "../../services/api";
+import { MaterialIcons as Icon } from "@expo/vector-icons/";
 
 import {
   Container,
@@ -57,6 +59,7 @@ function SearchPokemon() {
   const [error, setError] = useState("");
 
   const [searchValue, setSearchValue] = useState("");
+  const [uri, setUri] = useState(`pokemon?limit=20&offset=200`);
   const [items, setItems] = useState<any>([]);
 
   const [searchOffset, setSearchOffset] = useState(200);
@@ -121,10 +124,22 @@ function SearchPokemon() {
     setSearchValue(event);
   }
 
-  const handlerSearchButton = useCallback(() => {
-    if (items.length > 1) {
+  const handlerSearchButtonForward = useCallback(() => {
+    if (items.length >= 0) {
       setSearchOffset(searchOffset + 20);
-      getAllPokemons;
+
+      console.log("front: " + searchOffset);
+      getAllPokemons();
+    }
+    getAllPokemons();
+  }, [items]);
+
+  const handlerSearchButtonBack = useCallback(() => {
+    if (items.length >= 0) {
+      setSearchOffset(searchOffset - 20);
+
+      console.log("back: " + searchOffset);
+      getAllPokemons();
     }
     getAllPokemons();
   }, [items]);
@@ -135,9 +150,23 @@ function SearchPokemon() {
         placeholder="Pesquise por um pokemon..."
         onChangeText={handlerInput}
       ></Input>
-      <Button onPress={handlerSearchButton}>
-        <Paragraph>Carregar mais pokemons</Paragraph>
-      </Button>
+      <View
+        style={{
+          flexDirection: "row",
+          width: "100%",
+          justifyContent: "space-between",
+          marginBottom: "8%",
+        }}
+      >
+        <TouchableOpacity onPress={handlerSearchButtonBack}>
+          <Icon name="arrow-back" size={35}></Icon>
+        </TouchableOpacity>
+        <View></View>
+        <TouchableOpacity onPress={handlerSearchButtonForward}>
+          <Icon name="arrow-forward" size={35}></Icon>
+        </TouchableOpacity>
+      </View>
+
       <View style={{ width: "100%", height: "100%", paddingBottom: 50 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {items.length >= 1 ? (

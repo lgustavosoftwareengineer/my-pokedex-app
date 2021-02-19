@@ -37,7 +37,7 @@ export const Actions = styled.View`
 
   width: 100%;
   padding: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 8%;
 
   color: #000;
   background-color: #fff;
@@ -50,19 +50,6 @@ export const Button = styled.TouchableOpacity`
   flex-direction: row;
   width: 50%;
   justify-content: center;
-  padding-left: -10px;
-`;
-
-interface ButtonTextProps {
-  color?: string;
-}
-export const ButtonText = styled.Text`
-  font-size: 12px;
-  font-family: ${theme.fonts.normal};
-  color: ${(props: ButtonTextProps) =>
-    props.color ? props.color : theme.colors.black};
-  padding-left: 5px;
-  padding-right: 5px;
 `;
 
 export const Divisor = styled.View`
@@ -74,7 +61,7 @@ export const Divisor = styled.View`
 
 export const Card = styled.View`
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 8%;
   width: 100%;
   padding: 8%;
   border-radius: 25px;
@@ -104,7 +91,7 @@ export const SectionTitle = styled.Text`
   text-align: left;
   font-size: 20px;
   line-height: 24px;
-  margin-bottom: 15px;
+  margin-bottom: 2%;
   padding: 0px 10px;
   width: 100%;
 

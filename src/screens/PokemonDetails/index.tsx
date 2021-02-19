@@ -27,7 +27,6 @@ import {
 import {
   Actions,
   Button,
-  ButtonText,
   Card,
   Divisor,
   PokemonName,
@@ -180,9 +179,6 @@ function PokemonDetails() {
                 size={20}
                 color={isOnMyFavoritesPokedexExpression}
               />
-              <ButtonText color={isOnMyFavoritesPokedexExpression}>
-                {isOnMyPokedex.text}
-              </ButtonText>
             </Button>
             <Divisor />
             <Button onPress={() => handlerAddInFavorites(params.id)}>
@@ -191,17 +187,14 @@ function PokemonDetails() {
                 size={20}
                 color={isOnMyFavoritesExpression}
               />
-              <ButtonText color={isOnMyFavoritesExpression}>
-                {isOnMyFavorites.text}
-              </ButtonText>
             </Button>
           </Actions>
 
           <Card>
-            <CardTitle>Peso: 84kg</CardTitle>
+            <CardTitle>Peso: {pokemon.weight} kg</CardTitle>
             <CardTitle>Status</CardTitle>
             <CardSubtitle>Nome: {pokemon?.name}</CardSubtitle>
-            <CardSubtitle>Valor: 100</CardSubtitle>
+            <CardSubtitle>Valor: {pokemon.order}</CardSubtitle>
           </Card>
 
           <SectionTitle>Habilidades</SectionTitle>

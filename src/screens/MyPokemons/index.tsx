@@ -15,13 +15,12 @@ import { theme } from "../../theme";
 import {
   Container,
   Input,
-  Title,
   ScrollView,
-  Button,
   Paragraph,
   SubTitle,
 } from "../../styles";
-import { Header } from "./style";
+
+import { Title, Actions, Button, Divisor, Main } from "./style";
 
 import { Pokemon, User } from "./interfaces";
 
@@ -89,24 +88,24 @@ function MyPokemons() {
 
   return (
     <Container>
-      <Header>
-        <TouchableOpacity onPress={handlerUpdateButton}>
-          <Icon name="update" size={36} color={theme.colors.black} />
-        </TouchableOpacity>
-
-        <Title>Pokédex de {user.name}</Title>
-
-        <TouchableOpacity onPress={handlerDeleteButton}>
-          <Icon name="clear" size={36} color={theme.colors.black} />
-        </TouchableOpacity>
-      </Header>
+      <Title>Pokédex de {user.name}</Title>
 
       <Input
         placeholder="Pesquise na sua Pokédex..."
         onChangeText={handlerInput}
       ></Input>
 
-      <View style={{ width: "100%", height: "100%", paddingBottom: "10%" }}>
+      <Actions>
+        <Button onPress={handlerUpdateButton}>
+          <Icon name="update" size={26} color={theme.colors.gray} />
+        </Button>
+        <Divisor />
+        <Button onPress={handlerDeleteButton}>
+          <Icon name="clear" size={26} color={theme.colors.gray} />
+        </Button>
+      </Actions>
+
+      <Main>
         <ScrollView showsVerticalScrollIndicator={false}>
           {pokemons.length <= 0 ? (
             <View>
@@ -134,7 +133,7 @@ function MyPokemons() {
             ))
           )}
         </ScrollView>
-      </View>
+      </Main>
     </Container>
   );
 }

@@ -24,6 +24,6 @@
 
 > 🅿️ A Pokedex app which helps the pokemon trainer to manager his pokemons..
 
-# ✌ Feito com ❤️ por [Luiz Gustavo](https://github.com/tonicprism/)
+# ✌ Made with ❤️ by [Luiz Gustavo](https://github.com/tonicprism/)
 
 Deixe uma ⭐️ se este projeto ajudou você!

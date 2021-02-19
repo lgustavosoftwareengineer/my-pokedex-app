@@ -26,4 +26,4 @@
 
 # ✌ Made with ❤️ by [Luiz Gustavo](https://github.com/tonicprism/)
 
-Deixe uma ⭐️ se este projeto ajudou você!
+Let a ⭐️ if this project helped you!

@@ -17,7 +17,7 @@ export const Header = styled.View`
 
 export const PokemonName = styled.Text`
   font-weight: 500;
-  font-size: 18px;
+  font-size: 20px;
   text-align: center;
   line-height: 24px;
 
@@ -43,8 +43,8 @@ export const Actions = styled.View`
 export const Button = styled.TouchableOpacity`
   flex-direction: row;
   width: 50%;
-  justify-content: space-between;
   justify-content: center;
+  padding-left: -10px;
 `;
 
 interface ButtonTextProps {
@@ -56,13 +56,14 @@ export const ButtonText = styled.Text`
   color: ${(props: ButtonTextProps) =>
     props.color ? props.color : theme.colors.black};
   padding-left: 5px;
+  padding-right: 5px;
 `;
 
 export const Divisor = styled.View`
   width: 1px;
   height: 100%;
   background-color: ${theme.colors.black};
-  margin: 0 5px;
+  margin-right: 10px;
 `;
 
 export const Card = styled.View`
@@ -102,7 +103,7 @@ export const SectionTitle = styled.Text`
   width: 100%;
 
   font-style: normal;
-  font-family: ${theme.fonts.subTitle};
+  font-family: ${theme.fonts.title};
   color: ${theme.colors.black};
 `;
 
@@ -129,6 +130,8 @@ export const Skill = styled.View`
 
 export const SkillLabel = styled.Text`
   text-align: center;
+  font-family: ${theme.fonts.subTitle};
+
   color: ${theme.colors.black};
-  font-size: 12px;
+  font-size: 18px;
 `;

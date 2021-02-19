@@ -1,11 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
 import { View, Text } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import Card from "../../components/Card";
 import { getUser } from "../../repositories/user.repository";
 import api from "../../services/api";
-import { MaterialIcons as Icon } from "@expo/vector-icons/";
 
 import {
   Container,
@@ -59,8 +57,8 @@ function SearchPokemon() {
   const [error, setError] = useState("");
 
   const [searchValue, setSearchValue] = useState("");
-  const [uri, setUri] = useState(`pokemon?limit=20&offset=200`);
-  const [items, setItems] = useState<any>([]);
+  const [pokemons, setPokemons] = useState<any>([]);
+  const [pokemonsFiltered, setPokemonsFiltered] = useState<Pokemon[]>([]);
 
   const [searchOffset, setSearchOffset] = useState(200);
 
@@ -106,7 +104,7 @@ function SearchPokemon() {
               abilities: item.data.moves,
             });
             if (index + 1 === response.data.results.length) {
-              setItems(array);
+              setPokemons(array);
             }
           })
           .catch((err) => {});
@@ -122,27 +120,21 @@ function SearchPokemon() {
 
   function handlerInput(event: string) {
     setSearchValue(event);
+    if (event.length > 1) {
+      const _pokemonsFiltered = pokemons.filter((pokemon: any) => {
+        return pokemon.name.toLowerCase().includes(searchValue.toLowerCase());
+      });
+      setPokemonsFiltered(_pokemonsFiltered);
+    }
   }
 
-  const handlerSearchButtonForward = useCallback(() => {
-    if (items.length >= 0) {
+  const handlerSearchButton = useCallback(() => {
+    if (pokemons.length >= 0) {
       setSearchOffset(searchOffset + 20);
-
-      console.log("front: " + searchOffset);
       getAllPokemons();
     }
     getAllPokemons();
-  }, [items]);
-
-  const handlerSearchButtonBack = useCallback(() => {
-    if (items.length >= 0) {
-      setSearchOffset(searchOffset - 20);
-
-      console.log("back: " + searchOffset);
-      getAllPokemons();
-    }
-    getAllPokemons();
-  }, [items]);
+  }, [pokemons]);
 
   return (
     <Container>
@@ -150,45 +142,39 @@ function SearchPokemon() {
         placeholder="Pesquise por um pokemon..."
         onChangeText={handlerInput}
       ></Input>
-      <View
-        style={{
-          flexDirection: "row",
-          width: "100%",
-          justifyContent: "space-between",
-          marginBottom: "8%",
-        }}
-      >
-        <TouchableOpacity onPress={handlerSearchButtonBack}>
-          <Icon name="arrow-back" size={35}></Icon>
-        </TouchableOpacity>
-        <View></View>
-        <TouchableOpacity onPress={handlerSearchButtonForward}>
-          <Icon name="arrow-forward" size={35}></Icon>
-        </TouchableOpacity>
-      </View>
-
+      <View></View>
+      <Button onPress={handlerSearchButton}>
+        <Paragraph>Carregar novos pokemons</Paragraph>
+      </Button>
       <View style={{ width: "100%", height: "100%", paddingBottom: 50 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {items.length >= 1 ? (
-            items.map((item: PokemonFromApi, index: number) => {
-              return (
-                <Card
-                  key={index}
-                  name={item.name}
-                  imageUrl={item.imageUrl}
-                  types={item.types}
-                  onPress={() => navigateToDetailsPage(item.id)}
-                />
-              );
-            })
+          {pokemons.length <= 0 ? (
+            <View>
+              <Paragraph>Nenhum pokemon aqui...</Paragraph>
+            </View>
+          ) : pokemonsFiltered.length > 0 && searchValue.length > 0 ? (
+            pokemonsFiltered.map((pokemon, index) => (
+              <Card
+                key={index}
+                name={pokemon.name}
+                types={pokemon.types}
+                imageUrl={pokemon.imageUrl}
+                onPress={() => navigateToDetailsPage(pokemon?.id)}
+              />
+            ))
           ) : (
-            <Title>Nenhum resultado para vc</Title>
+            pokemons.map((pokemon: any, index: number) => (
+              <Card
+                key={index}
+                name={pokemon.name}
+                types={pokemon.types}
+                imageUrl={pokemon.imageUrl}
+                onPress={() => navigateToDetailsPage(pokemon?.id)}
+              />
+            ))
           )}
         </ScrollView>
       </View>
-      <Button>
-        <Paragraph>Carregar mais pokemons</Paragraph>
-      </Button>
     </Container>
   );
 }

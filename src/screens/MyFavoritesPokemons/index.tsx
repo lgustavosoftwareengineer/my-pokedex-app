@@ -44,7 +44,9 @@ interface Pokemon {
 function MyFavoritesPokemons() {
   const [user, setUser] = useState<User>({});
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [pokemonsFiltered, setPokemonsFiltered] = useState<Pokemon[]>([]);
   const [error, setError] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   const { navigate } = useNavigation();
 
@@ -69,6 +71,16 @@ function MyFavoritesPokemons() {
     clearAllMyFavorites();
     getAllPokemons();
   }, [pokemons]);
+
+  function handlerInput(event: string) {
+    setSearchValue(event);
+    if (event.length > 1) {
+      const _pokemonsFiltered = pokemons.filter((pokemon: any) => {
+        return pokemon.name.toLowerCase().includes(searchValue.toLowerCase());
+      });
+      setPokemonsFiltered(_pokemonsFiltered);
+    }
+  }
 
   useEffect(() => {
     getUser().then((value) => {
@@ -109,7 +121,10 @@ function MyFavoritesPokemons() {
         </TouchableOpacity>
       </View>
 
-      <Input placeholder="Pesquise na sua lista de favoritos..."></Input>
+      <Input
+        placeholder="Pesquise na sua lista de favoritos..."
+        onChangeText={handlerInput}
+      ></Input>
 
       <View style={{ width: "100%", height: "100%", paddingBottom: "10%" }}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -117,6 +132,16 @@ function MyFavoritesPokemons() {
             <View>
               <Paragraph>Você não possui nenhum pokemon</Paragraph>
             </View>
+          ) : pokemonsFiltered.length > 0 && searchValue.length > 0 ? (
+            pokemonsFiltered.map((pokemon, index) => (
+              <Card
+                key={index}
+                name={pokemon.name}
+                types={pokemon.types}
+                imageUrl={pokemon.imageUrl}
+                onPress={() => navigateToDetailsPage(pokemon?.id)}
+              />
+            ))
           ) : (
             pokemons.map((pokemon, index) => (
               <Card

@@ -41,6 +41,9 @@ interface Pokemon {
 function MyPokemons() {
   const [user, setUser] = useState<User>({});
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [pokemonsFiltered, setPokemonsFiltered] = useState<Pokemon[]>([]);
+
+  const [searchValue, setSearchValue] = useState("");
 
   const [error, setError] = useState("");
 
@@ -69,6 +72,16 @@ function MyPokemons() {
     clearAllPokemons();
     getAllPokemons();
   }, [pokemons]);
+
+  function handlerInput(event: string) {
+    setSearchValue(event);
+    if (event.length > 1) {
+      const _pokemonsFiltered = pokemons.filter((pokemon: any) => {
+        return pokemon.name.toLowerCase().includes(searchValue.toLowerCase());
+      });
+      setPokemonsFiltered(_pokemonsFiltered);
+    }
+  }
 
   useEffect(() => {
     getUser().then((value) => {
@@ -108,21 +121,34 @@ function MyPokemons() {
           <Icon name="clear" size={36} color={theme.colors.black} />
         </TouchableOpacity>
       </View>
-      <Input placeholder="Pesquise na sua Pokédex..."></Input>
+      <Input
+        placeholder="Pesquise na sua Pokédex..."
+        onChangeText={handlerInput}
+      ></Input>
 
-      <View style={{ width: "100%", height: "100%" }}>
+      <View style={{ width: "100%", height: "100%", paddingBottom: "10%" }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {pokemons.length <= 0 ? (
             <View>
               <Paragraph>Você não possui nenhum pokemon</Paragraph>
             </View>
+          ) : pokemonsFiltered.length > 0 && searchValue.length > 0 ? (
+            pokemonsFiltered.map((pokemon, index) => (
+              <Card
+                key={index}
+                name={pokemon.name}
+                types={pokemon.types}
+                imageUrl={pokemon.imageUrl}
+                onPress={() => navigateToDetailsPage(pokemon?.id)}
+              />
+            ))
           ) : (
             pokemons.map((pokemon, index) => (
               <Card
                 key={index}
                 name={pokemon.name}
-                imageUrl={pokemon.imageUrl}
                 types={pokemon.types}
+                imageUrl={pokemon.imageUrl}
                 onPress={() => navigateToDetailsPage(pokemon?.id)}
               />
             ))

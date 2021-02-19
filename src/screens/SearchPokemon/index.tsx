@@ -1,6 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
 import { View, Text } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { MaterialIcons as Icon } from "@expo/vector-icons/";
+
 import Card from "../../components/Card";
 import { getUser } from "../../repositories/user.repository";
 import api from "../../services/api";
@@ -20,6 +23,7 @@ import {
   Result,
   User,
 } from "./interfaces";
+import { theme } from "../../theme";
 
 function SearchPokemon() {
   const [user, setUser] = useState<User>({});
@@ -27,6 +31,7 @@ function SearchPokemon() {
 
   const [searchValue, setSearchValue] = useState("");
   const [pokemons, setPokemons] = useState<any>([]);
+  const [prevPokemons, setPrevPokemons] = useState<any>([]);
   const [pokemonsFiltered, setPokemonsFiltered] = useState<Pokemon[]>([]);
 
   const [searchOffset, setSearchOffset] = useState(200);
@@ -98,9 +103,20 @@ function SearchPokemon() {
   const handlerSearchButton = useCallback(() => {
     if (pokemons.length >= 0) {
       setSearchOffset(searchOffset + 20);
+      setPrevPokemons([...pokemons]);
       getAllPokemons();
     }
+    setPrevPokemons([...pokemons]);
+
     getAllPokemons();
+  }, [pokemons]);
+
+  const handlerBackButton = useCallback(() => {
+    if (pokemons.length >= 0) {
+      setSearchOffset(searchOffset - 20);
+
+      setPokemons(prevPokemons);
+    }
   }, [pokemons]);
 
   return (
@@ -110,9 +126,21 @@ function SearchPokemon() {
         onChangeText={handlerInput}
       ></Input>
       <View></View>
-      <Button onPress={handlerSearchButton}>
-        <Paragraph>Carregar novos pokemons</Paragraph>
-      </Button>
+
+      <View
+        style={{
+          width: "100%",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <TouchableOpacity onPress={handlerBackButton}>
+          <Icon name="arrow-back" size={30} color={theme.colors.black} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handlerSearchButton}>
+          <Icon name="arrow-forward" size={30} color={theme.colors.black} />
+        </TouchableOpacity>
+      </View>
       <View style={{ width: "100%", height: "100%", paddingBottom: 50 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {pokemons.length <= 0 ? (

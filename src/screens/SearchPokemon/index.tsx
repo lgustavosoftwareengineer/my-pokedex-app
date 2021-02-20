@@ -116,6 +116,7 @@ function SearchPokemon() {
   return (
     <Container>
       <Input
+        style={{ fontSize: 13 }}
         placeholder={`Pesquise na lista de ${pokemons.length} pokemons...`}
         onChangeText={handlerInput}
       ></Input>

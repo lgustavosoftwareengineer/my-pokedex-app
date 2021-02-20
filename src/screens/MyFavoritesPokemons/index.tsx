@@ -97,8 +97,7 @@ function MyFavoritesPokemons() {
       <SubTitle>Seja bem vindo(a), {user.name}</SubTitle>
 
       <Input
-        style={{ fontSize: 12 }}
-        placeholder={`Pesquise na sua lista de favoritos com ${pokemons.length} pokemon(s)...`}
+        placeholder="Pesquise na sua lista de favoritos..."
         onChangeText={handlerInput}
       ></Input>
 

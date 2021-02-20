@@ -116,7 +116,7 @@ function SearchPokemon() {
   return (
     <Container>
       <Input
-        placeholder="Pesquise por um pokemon..."
+        placeholder={`Pesquise na lista de ${pokemons.length} pokemons...`}
         onChangeText={handlerInput}
       ></Input>
       <Actions>

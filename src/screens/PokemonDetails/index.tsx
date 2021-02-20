@@ -38,9 +38,14 @@ import {
   CardTitle,
   CardSubtitle,
   Center,
+  TypeLabel,
+  TypeElement,
+  Types,
 } from "./style";
 
 import { Params, Pokemon, Response } from "./interfaces";
+
+import { getColor } from "../../services/getColor";
 
 function PokemonDetails() {
   const route = useRoute();
@@ -154,6 +159,7 @@ function PokemonDetails() {
       </Container>
     );
   }
+
   return (
     <SafeAreaView style={{ backgroundColor: theme.colors.red }}>
       <ScrollView>
@@ -171,6 +177,14 @@ function PokemonDetails() {
             }}
             style={{ width: 200, height: 200, margin: 20 }}
           />
+
+          <Types horizontal={true} showsHorizontalScrollIndicator={false}>
+            {pokemon.types?.map((type: any, index: number) => (
+              <TypeElement key={index} color={getColor(type.type?.name)}>
+                <TypeLabel>{type.type?.name}</TypeLabel>
+              </TypeElement>
+            ))}
+          </Types>
 
           <Actions>
             <Button onPress={() => handlerAddInPokedex(params.id)}>

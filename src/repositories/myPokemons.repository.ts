@@ -1,7 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-interface PokemonType {
-  name: string;
+export interface PokemonType {
+  type?: {
+    name?: string;
+    url?: string;
+  };
 }
 
 interface Pokemon {

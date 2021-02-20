@@ -31,6 +31,33 @@ export const PokemonName = styled.Text`
   font-family: ${theme.fonts.title};
 `;
 
+export const Types = styled.ScrollView`
+  width: 90%;
+  margin-bottom: 5%;
+`;
+
+interface TypeElementProps {
+  color?: string;
+}
+export const TypeElement = styled.View`
+  background-color: ${(props: TypeElementProps) =>
+    props.color ? props.color : theme.colors.red};
+  border-radius: 40px;
+  padding: 5px;
+  min-width: 145px;
+  min-height: 30px;
+
+  margin-right: 8px;
+
+  justify-content: center;
+`;
+
+export const TypeLabel = styled.Text`
+  text-align: center;
+  color: ${theme.colors.white};
+  font-size: 15px;
+`;
+
 export const Actions = styled.View`
   flex-direction: row;
   justify-content: space-between;

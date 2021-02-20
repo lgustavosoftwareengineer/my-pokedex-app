@@ -9,7 +9,10 @@ export interface PokemonAbility {
 }
 
 export interface PokemonType {
-  name: string;
+  type?: {
+    name?: string;
+    url?: string;
+  };
 }
 export interface Pokemon {
   id?: number;

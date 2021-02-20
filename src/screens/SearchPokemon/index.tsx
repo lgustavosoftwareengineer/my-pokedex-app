@@ -132,8 +132,35 @@ function SearchPokemon() {
         <ScrollView showsVerticalScrollIndicator={false}>
           {pokemons.length <= 0 ? (
             <View>
+              <Paragraph
+                style={{
+                  backgroundColor: theme.colors.midGray,
+                  borderRadius: 40,
+                }}
+              >
+                🚨 Importante lembrar que só será carregado{" "}
+                <Paragraph
+                  style={{
+                    color: theme.colors.black,
+                    fontFamily: theme.fonts.title,
+                  }}
+                >
+                  20 pokemons por vez
+                </Paragraph>
+              </Paragraph>
               <Paragraph>
-                Clique no botão "{"->"}" para carregar os pokemons
+                Clique no botão{" "}
+                <Icon
+                  name="arrow-forward"
+                  size={26}
+                  color={theme.colors.gray}
+                />{" "}
+                para carregar + pokemons
+              </Paragraph>
+              <Paragraph>
+                Clique no botão{" "}
+                <Icon name="arrow-back" size={26} color={theme.colors.gray} />{" "}
+                para voltar uma listagem dos pokemons
               </Paragraph>
             </View>
           ) : pokemonsFiltered.length > 0 && searchValue.length > 0 ? (

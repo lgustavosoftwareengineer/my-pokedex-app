@@ -94,7 +94,8 @@ function MyPokemons() {
     <Container>
       <Title>Pokédex de {user.name}</Title>
       <Input
-        placeholder="Pesquise na sua Pokédex..."
+        style={{ fontSize: 13 }}
+        placeholder={`Pesquise na sua Pokédex com ${pokemons.length} pokemon(s)...`}
         onChangeText={handlerInput}
       ></Input>
 

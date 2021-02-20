@@ -2,7 +2,7 @@
    <img src="./src/assets/pokemon-logo.png" width="150"/>
 </p>
 
-<h1 align="center"> 🅿️ Pokedex App </h1>
+<h1 align="center"> 🅿️ Minha Pokédex App</h1>
 
 <p align="center">
 	<a href="https://www.linkedin.com/in/luiz-gustavo-56146b1a5/">
@@ -22,8 +22,8 @@
    </a>
 </p>
 
-> 🅿️ A Pokedex app which helps the pokemon trainer to manager his pokemons..
+> 🅿️ Uma aplicação que busca simular uma Pokédex com o propósito de ajudar os treinadores pokemons a gerenciar os seus pokemons.
 
-# ✌ Made with ❤️ by [Luiz Gustavo](https://github.com/tonicprism/)
+# ✌ Feito com ❤️ por [Luiz Gustavo](https://github.com/tonicprism/)
 
-Let a ⭐️ if this project helped you!
+Deixe uma ⭐️ se esse projeto ajudou você!

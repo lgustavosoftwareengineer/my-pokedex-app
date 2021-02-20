@@ -37,6 +37,16 @@ function MyPokemons() {
 
   const { navigate } = useNavigation();
 
+  function getUserNow() {
+    getUser().then((value) => {
+      if (value) {
+        setUser(value);
+      } else {
+        setError("Usuário não encontrado");
+      }
+    });
+  }
+
   function getAllPokemons() {
     getPokemons().then((value) => {
       if (value) {
@@ -70,15 +80,9 @@ function MyPokemons() {
   }
 
   useEffect(() => {
-    getUser().then((value) => {
-      if (value) {
-        setUser(value);
-      } else {
-        setError("Usuário não encontrado");
-      }
-    });
+    getUserNow();
     getAllPokemons();
-  }, []);
+  }, [pokemons]);
 
   function navigateToDetailsPage(id?: number) {
     navigate("pokemon-details", {
@@ -89,7 +93,6 @@ function MyPokemons() {
   return (
     <Container>
       <Title>Pokédex de {user.name}</Title>
-
       <Input
         placeholder="Pesquise na sua Pokédex..."
         onChangeText={handlerInput}

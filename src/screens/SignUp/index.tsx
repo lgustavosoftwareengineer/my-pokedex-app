@@ -40,7 +40,6 @@ function SignUp() {
       );
     } else {
       storeUser({ age, name, sex });
-      getUser().then((value) => console.log(value));
       navigate("tabs", { screen: "home" });
     }
   }

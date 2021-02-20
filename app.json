@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "poke-app",
+    "name": "Minha Pokédex",
     "slug": "poke-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,21 +8,19 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#f43c2c"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#f43c2c"
       },
       "package": "com.poke.app"
     },

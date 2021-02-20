@@ -35,6 +35,18 @@ function MyFavoritesPokemons() {
 
   const { navigate } = useNavigation();
 
+  function getUserNow() {
+    getUser()
+      .then((value) => {
+        if (value) {
+          setUser(value);
+        } else {
+          setError("Usuário não encontrado");
+        }
+      })
+      .catch((err) => {});
+  }
+
   function getAllPokemons() {
     getMyFavorites().then((value) => {
       if (value) {
@@ -68,16 +80,9 @@ function MyFavoritesPokemons() {
   }
 
   useEffect(() => {
-    getUser().then((value) => {
-      if (value) {
-        setUser(value);
-      } else {
-        setError("Usuário não encontrado");
-      }
-    });
-
+    getUserNow();
     getAllPokemons();
-  }, []);
+  }, [pokemons]);
 
   function navigateToDetailsPage(id?: number) {
     navigate("pokemon-details", {

@@ -40,7 +40,7 @@ function SearchPokemon() {
         setError("Usuário não encontrado");
       }
     });
-  }, [user]);
+  }, []);
 
   function getAllPokemons() {
     var array = new Array();
@@ -119,8 +119,6 @@ function SearchPokemon() {
         placeholder="Pesquise por um pokemon..."
         onChangeText={handlerInput}
       ></Input>
-      <View></View>
-
       <Actions>
         <Button onPress={handlerBackButton}>
           <Icon name="arrow-back" size={26} color={theme.colors.gray} />
@@ -134,7 +132,9 @@ function SearchPokemon() {
         <ScrollView showsVerticalScrollIndicator={false}>
           {pokemons.length <= 0 ? (
             <View>
-              <Paragraph>Nenhum pokemon aqui...</Paragraph>
+              <Paragraph>
+                Clique no botão "{"->"}" para carregar os pokemons
+              </Paragraph>
             </View>
           ) : pokemonsFiltered.length > 0 && searchValue.length > 0 ? (
             pokemonsFiltered.map((pokemon, index) => (

@@ -57,6 +57,8 @@ function MyPokemons() {
     });
   }
 
+  /** OPA */
+
   const handlerUpdateButton = useCallback(() => {
     if (pokemons.length > 1) {
       getAllPokemons();
